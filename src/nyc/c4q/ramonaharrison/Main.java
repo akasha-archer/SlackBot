@@ -10,15 +10,19 @@ public class Main {
 
         myBot.testApi();
 
-        myBot.listChannels();
+      //  myBot.listChannels();
 
-        myBot.listMessages(Slack.BOTS_CHANNEL_ID);
+       myBot.listMessages(Slack.BOTS_CHANNEL_ID);
+
+        myBot.checkForWord();
+
+      // myBot.getAnEvent();
 
         // Post "Hello, world!" to the #bots channel
-        myBot.sendMessageToBotsChannel("Hello, world!");
+       // myBot.sendMessageToBotsChannel("Hola, mundo! Como se escribe java en espanol??");
 
         // Post a pineapple photo to the #bots channel
-        myBot.sendMessageToBotsChannel("http://weknowyourdreams.com/images/pineapple/pineapple-07.jpg");
+       // myBot.sendMessageToBotsChannel("http://placehold.it/350x250");
 
     }
 }
