@@ -1,6 +1,7 @@
 package nyc.c4q.ramonaharrison;
 
 import nyc.c4q.ramonaharrison.model.Channel;
+import nyc.c4q.ramonaharrison.model.Event;
 import nyc.c4q.ramonaharrison.model.Message;
 import nyc.c4q.ramonaharrison.network.*;
 import nyc.c4q.ramonaharrison.network.response.*;
@@ -17,7 +18,8 @@ public class Bot {
     // TODO: implement your bot logic!
 
     public Bot() {
-
+        TodayInHistoryResponse response = TodayInHistory.getTodayInHistory();
+        List<Event> events = response.getEvents();
     }
 
     /**
