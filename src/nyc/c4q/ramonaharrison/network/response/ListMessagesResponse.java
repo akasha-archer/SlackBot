@@ -10,10 +10,9 @@ import java.util.List;
 /**
  * Created by Ramona Harrison
  * on 8/26/16
- *
+ * <p>
  * A class representing the response from channels.history
  * See https://api.slack.com/methods/channels.history
- *
  */
 
 public class ListMessagesResponse extends Response {
@@ -34,6 +33,7 @@ public class ListMessagesResponse extends Response {
     }
 
     public List<Message> getMessages() {
+
         return messages;
     }
 }

@@ -9,12 +9,14 @@ import java.util.List;
 /**
  * Created by Ramona Harrison
  * on 8/26/16
+ * <p>
  * A class representing a message attachment.
  * See https://api.slack.com/docs/message-attachments
  */
 
 public class Attachment {
 
+    // TODO: implement private fields for each of the following attachment JSON keys:
     private String fallback;
     private String color;
     private String pretext;
@@ -29,10 +31,12 @@ public class Attachment {
     private String thumbUrl;
     private String footer;
     private String footerIcon;
-    private long ts;
+    private long ts;  // timestamp
 
 
     public Attachment(JSONObject json) {
+        // TODO: parse an attachment from the incoming json
+        // check for null before assuming item is in json object
 
         if (json.containsKey("fallback")) {
             this.fallback = (String) json.get("fallback");
@@ -100,6 +104,9 @@ public class Attachment {
         }
 
     }
+
+    // TODO add getters to access private fields
+    // command + N to generate Getter methods
 
     public String getFallback() {
         return fallback;

@@ -6,28 +6,50 @@ import nyc.c4q.ramonaharrison.model.Message;
 import nyc.c4q.ramonaharrison.network.*;
 import nyc.c4q.ramonaharrison.network.response.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.lang.CharSequence;
+import java.lang.*;
+import java.util.Scanner;
 
 /**
  * Created by Ramona Harrison
  * on 8/26/16
- *
  */
 
 public class Bot {
     // TODO: implement your bot logic!
 
-    public Bot() {
-        TodayInHistoryResponse response = TodayInHistory.getTodayInHistory();
-        List<Event> events = response.getEvents();
+    private List<String> prScannedMessages = new ArrayList<String>();
+
+    private void addToMessageList(String message) {
+        String[] splited = message.split("\\s+");
+        for (String word : splited) {
+            prScannedMessages.add(word);
+        }
     }
+
+
+    public void checkForWord() {
+        int count = 0;
+        for (String word : prScannedMessages) {
+            if (word.equalsIgnoreCase("history") || word.equalsIgnoreCase("historytroll") || word.equalsIgnoreCase("ourtestword")) {
+                count++;
+                System.out.println("word found");
+            }
+        }
+        if(count > 0){
+            getAnEvent();
+        }
+    }
+
 
     /**
      * Sample method: tests the Slack API. Prints a message indicating success or failure.
      */
     public void testApi() {
         Response apiTest = Slack.testApi();
-        System.out.println("API OK: " +apiTest.isOk() + "\n");
+        System.out.println("API OK: " + apiTest.isOk() + "\n");
     }
 
     /**
@@ -61,11 +83,21 @@ public class Bot {
             List<Message> messages = listMessagesResponse.getMessages();
 
             System.out.println("\nMessages: ");
+
+            int temp = 0;
+
             for (Message message : messages) {
+
                 System.out.println();
                 System.out.println("Timestamp: " + message.getTs());
                 System.out.println("Message: " + message.getText());
+                addToMessageList(message.getText());
+                temp++;
+                if (temp == 5) {
+                    break;
+                }
             }
+
         } else {
             System.err.print("Error listing messages: " + listMessagesResponse.getError());
         }
@@ -101,7 +133,9 @@ public class Bot {
         }
     }
 
-    public void getAnEvent (){
+    public void getAnEvent() {
         sendMessageToBotsChannel(TodayInHistory.getTodayInHistory().getRandomEvent().toString());
     }
+
+
 }

@@ -1,13 +1,13 @@
+
 package nyc.c4q.ramonaharrison.model;
 
-import com.sun.xml.internal.bind.v2.TODO;
+import nyc.c4q.ramonaharrison.network.HTTP;
 import org.json.simple.JSONObject;
-
-import java.util.Random;
 
 /**
  * Created by Rafael on 9/14/16.
  */
+
 public class Event {
 
     private String year;
@@ -35,10 +35,13 @@ public class Event {
     @Override
     public String toString() {
 
+        AttachmentEdit attach = new AttachmentEdit();
         String year = getYear();
         String text = getText();
-        String complete = "On this day in " + year + ": \n" + text + "\n";
+        String border1 = "  *   *   *   *   *   *   *   *   *   *   *   *   *  *   *   *   *   *  *   *   *   *   *  *   *   *   *   *  *   *   *   *   *";
+        String complete = border1 + "\n" +"On this day in " + year + ": \n" + text + "\n" + HTTP.stringToURL(attach.getAttachment() + "\n"+ border1);
 
         return complete;
     }
+
 }

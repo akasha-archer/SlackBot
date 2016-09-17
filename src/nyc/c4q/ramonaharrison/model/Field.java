@@ -3,9 +3,8 @@ package nyc.c4q.ramonaharrison.model;
 import org.json.simple.JSONObject;
 
 /**
- * Created by Rafael on 9/15/16.
+ * Created by akashaarcher on 9/11/16.
  */
-
 public class Field {
 
     private String title;
@@ -28,6 +27,7 @@ public class Field {
         }
 
     }
+
 
     public String getTitle() {
         return title;
