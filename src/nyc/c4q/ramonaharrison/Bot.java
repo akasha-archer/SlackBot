@@ -55,12 +55,13 @@ public class Bot {
         }
     }
 
-    public void checkForWord(String word) {
+    public int checkForWord(String word) {
         if (word.equalsIgnoreCase("history") || word.equalsIgnoreCase("historytroll") || word.equalsIgnoreCase("today")) {
             getAnEvent();
             System.out.println("word found");
-            return;
+            return 1;
         }
+        return 0;
     }
 
     public void keepCheckingForWord(){
@@ -69,8 +70,12 @@ public class Bot {
                 ListMessagesResponse listMessagesResponse = Slack.listMessages(Slack.BOTS_CHANNEL_ID);
                 List<Message> messages = listMessagesResponse.getMessages();
                 String[] splitted = messages.get(0).getText().split("\\s+");
+                int count = 0;
                 for (String word : splitted) {
-                    checkForWord(word);
+                    count += checkForWord(word);
+                    if(count > 0){
+                        break;
+                    }
                 }
             }
         }

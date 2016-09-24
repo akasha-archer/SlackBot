@@ -9,7 +9,5 @@ public class Main {
         myBot.testApi();
         myBot.listMessages(Slack.BOTS_CHANNEL_ID);
         myBot.keepCheckingForWord();
-
-
     }
 }
