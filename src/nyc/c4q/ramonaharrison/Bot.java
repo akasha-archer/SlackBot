@@ -21,6 +21,18 @@ public class Bot {
     // TODO: implement your bot logic!
 
     private List<String> prScannedMessages = new ArrayList<String>();
+    private String mLastTimeStamp = "";
+
+    private boolean isThereNewUserInput(){
+        ListMessagesResponse listMessagesResponse = Slack.listMessages(Slack.BOTS_CHANNEL_ID);
+        List<Message> messages = listMessagesResponse.getMessages();
+        String newTimeStamp = messages.get(0).getTs();
+        if(!mLastTimeStamp.equals(newTimeStamp)){
+            mLastTimeStamp = newTimeStamp;
+            return true;
+        }
+        return !mLastTimeStamp.equals(newTimeStamp);
+    }
 
     private void addToMessageList(String message) {
         String[] splited = message.split("\\s+");
@@ -33,13 +45,34 @@ public class Bot {
     public void checkForWord() {
         int count = 0;
         for (String word : prScannedMessages) {
-            if (word.equalsIgnoreCase("history") || word.equalsIgnoreCase("historytroll") || word.equalsIgnoreCase("ourtestword")) {
+            if (word.equalsIgnoreCase("history") || word.equalsIgnoreCase("historytroll") || word.equalsIgnoreCase("today")) {
                 count++;
                 System.out.println("word found");
             }
         }
         if(count > 0){
             getAnEvent();
+        }
+    }
+
+    public void checkForWord(String word) {
+        if (word.equalsIgnoreCase("history") || word.equalsIgnoreCase("historytroll") || word.equalsIgnoreCase("today")) {
+            getAnEvent();
+            System.out.println("word found");
+        }
+    }
+
+    public void keepCheckingForWord(){
+        while (true) {
+            if(isThereNewUserInput()){
+                ListMessagesResponse listMessagesResponse = Slack.listMessages(Slack.BOTS_CHANNEL_ID);
+                List<Message> messages = listMessagesResponse.getMessages();
+                addToMessageList(messages.get(0).getText());
+                String[] splitted = messages.get(0).getText().split("\\s+");
+                for (String word : splitted) {
+                    checkForWord(word);
+                }
+            }
         }
     }
 
@@ -90,6 +123,9 @@ public class Bot {
 
                 System.out.println();
                 System.out.println("Timestamp: " + message.getTs());
+                if(temp == 0){
+                    mLastTimeStamp = message.getTs();
+                }
                 System.out.println("Message: " + message.getText());
                 addToMessageList(message.getText());
                 temp++;

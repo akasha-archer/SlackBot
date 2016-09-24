@@ -15,6 +15,7 @@ public class Main {
        myBot.listMessages(Slack.BOTS_CHANNEL_ID);
 
         myBot.checkForWord();
+        myBot.keepCheckingForWord();
 
       // myBot.getAnEvent();
 
